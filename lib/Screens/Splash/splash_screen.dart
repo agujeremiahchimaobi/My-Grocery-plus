@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_grocery_plus/Screens/Authentication/Sign_In/phone_number_login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -10,6 +13,22 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const PhoneLoginScreen(),
+          ),
+        );
+      },
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -17,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Column(
             children: [
               Container(
-                height: 200,
+                height: 230,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
