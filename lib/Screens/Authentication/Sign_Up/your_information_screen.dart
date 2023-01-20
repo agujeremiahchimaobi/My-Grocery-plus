@@ -1,9 +1,33 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_grocery_plus/Widgets/reusable_widget.dart';
 
-class YourInformationScreen extends StatelessWidget {
+import 'choose_password.dart';
+
+class YourInformationScreen extends StatefulWidget {
   const YourInformationScreen({Key? key}) : super(key: key);
+
+  @override
+  State<YourInformationScreen> createState() => _YourInformationScreenState();
+}
+
+class _YourInformationScreenState extends State<YourInformationScreen> {
+  File? imageFile;
+  _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +51,7 @@ class YourInformationScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: const Color(0xff37474F),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -46,13 +70,22 @@ class YourInformationScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 60),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.grey.shade300,
-                  child: const Icon(
-                    Icons.add_a_photo_outlined,
-                    size: 45,
-                    color: Color(0xff37474F),
+                GestureDetector(
+                  onTap: () {
+                    _getFromGallery();
+                  },
+                  child: CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.grey.shade300,
+                    backgroundImage:
+                        imageFile != null ? FileImage(imageFile!) : null,
+                    child: imageFile == null
+                        ? const Icon(
+                            Icons.add_a_photo_outlined,
+                            color: Colors.black,
+                            size: 50,
+                          )
+                        : const Text(''),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -70,9 +103,9 @@ class YourInformationScreen extends StatelessWidget {
                   ),
                   color: Colors.blue,
                   text: 'Sync from facebook',
-                  bottom: 0,
+                  bottom: 10,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 const CustomTextField(
                   hint: 'Full Name',
                   prefix: Icon(
@@ -81,14 +114,22 @@ class YourInformationScreen extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const CustomBtn(
-                  suffix: Icon(
+                CustomBtn(
+                  suffix: const Icon(
                     Icons.arrow_forward_rounded,
                     color: Colors.white,
                   ),
-                  color: Color(0xff5ec401),
+                  color: const Color(0xff5ec401),
                   text: 'Next',
                   bottom: 20,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChoosePassword(),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

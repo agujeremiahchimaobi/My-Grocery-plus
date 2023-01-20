@@ -18,39 +18,10 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              const CustomGradient(),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: CustomBtn(
-                      suffix: const Icon(
-                        Icons.arrow_forward_rounded,
-                        color: Colors.white,
-                      ),
-                      color: const Color(0xff5ec401),
-                      bottom: 20,
-                      text: 'Next',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PasswordLogin(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          const CustomGradient(),
           SingleChildScrollView(
             child: Container(
-              // height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height,
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,6 +62,27 @@ class _PhoneLoginScreenState extends State<PhoneLoginScreen> {
                     onChanged: (phone) {
                       debugPrint(phone.completeNumber);
                     },
+                  ),
+                  const Spacer(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CustomBtn(
+                      suffix: const Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.white,
+                      ),
+                      color: const Color(0xff5ec401),
+                      bottom: 20,
+                      text: 'Next',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PasswordLogin(),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
